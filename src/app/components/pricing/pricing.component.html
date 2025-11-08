@@ -1,58 +1,104 @@
-<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
-  <mat-card class="p-4 shadow rounded-4 w-100" style="max-width: 450px;">
+<div
+  class="d-flex justify-content-center align-items-center min-vh-100 bg-light"
+>
+  <mat-card class="p-4 shadow rounded-4 w-100" style="max-width: 450px">
     <form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
-
       <!-- Full Day Toggle -->
       <div class="d-flex justify-content-between align-items-center mb-0">
         <div>
           <h5 class="fw-bold heading-color mb-0">Full Day</h5>
           <small class="heading-color fw-medium">Prices include all Fees</small>
         </div>
-        <mat-slide-toggle
-          color="accent"
-          formControlName="fullDay"
-        ></mat-slide-toggle>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input custom-toggle"
+            type="checkbox"
+            id="fullDayToggle"
+            formControlName="fullDay"
+          />
+        </div>
       </div>
 
       <!-- Full Day Price -->
-       <div class="mt-2">
-      <h6 class="fw-bold">Full Day Price</h6>
-      <mat-form-field appearance="outline" class="w-100 black-outline-field">
-        <input
-          matInput
-          type="number"
-          formControlName="fullDayPrice"
-          placeholder="0"
-        />
-      </mat-form-field>
-    </div>
+      <div class="mt-2">
+        <h6 class="fw-bold">Full Day Price</h6>
+        <mat-form-field appearance="outline" class="w-100 black-outline-field">
+          <input
+            matInput
+            type="number"
+            formControlName="fullDayPrice"
+            placeholder="0"
+          />
+        </mat-form-field>
+      </div>
+
       <!-- Default Timing -->
       <h6 class="fw-bold heading-color">Default Timing</h6>
-    <div class="row g-2">
-  <div class="col-12 col-md-6">
-    <mat-form-field appearance="outline" class="w-100 black-outline-field">
-      <mat-label class="fw-bold">Check In</mat-label>
-      <input matInput type="time" formControlName="checkIn" />
-      <mat-icon matSuffix>schedule</mat-icon>
-    </mat-form-field>
-  </div>
-  <div class="col-12 col-md-6">
-    <mat-form-field appearance="outline" class="w-100 black-outline-field">
-      <mat-label class="fw-bold">Check Out</mat-label>
-      <input matInput type="time" formControlName="checkOut" />
-      <mat-icon matSuffix>schedule</mat-icon>
-    </mat-form-field>
-  </div>
-</div>
+      <div class="row g-2">
+        <!-- Check In -->
+        <div class="col-12 col-md-6">
+          <mat-form-field
+            appearance="outline"
+            class="w-100 black-outline-field"
+          >
+            <mat-label class="fw-bold">Check In</mat-label>
+            <input
+              matInput
+              type="time"
+              formControlName="checkIn"
+              #checkInInput
+            />
+            <mat-icon
+              matSuffix
+              class="cursor-pointer"
+              (click)="
+                $any(checkInInput).showPicker
+                  ? $any(checkInInput).showPicker()
+                  : checkInInput.focus()
+              "
+              >schedule</mat-icon
+            >
+          </mat-form-field>
+        </div>
 
+        <!-- Check Out -->
+        <div class="col-12 col-md-6">
+          <mat-form-field
+            appearance="outline"
+            class="w-100 black-outline-field"
+          >
+            <mat-label class="fw-bold">Check Out</mat-label>
+            <input
+              matInput
+              type="time"
+              formControlName="checkOut"
+              #checkOutInput
+            />
+            <mat-icon
+              matSuffix
+              class="cursor-pointer"
+              (click)="
+                $any(checkOutInput).showPicker
+                  ? $any(checkOutInput).showPicker()
+                  : checkOutInput.focus()
+              "
+              >schedule</mat-icon
+            >
+          </mat-form-field>
+        </div>
+      </div>
 
-      <!-- Meals Offered -->
+      <!-- Meals Offered Toggle -->
       <div class="d-flex justify-content-between align-items-center mb-3">
         <h6 class="fw-bold heading-color mb-0">Meals Offered</h6>
-        <mat-slide-toggle
-          color="accent"
-          formControlName="mealsOffered"
-        ></mat-slide-toggle>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input custom-toggle"
+            type="checkbox"
+            id="mealsOffered"
+            formControlName="mealsOffered"
+          />
+        </div>
       </div>
 
       <!-- Meals Section -->
@@ -60,13 +106,19 @@
         <!-- Breakfast -->
         <div class="d-flex justify-content-between align-items-center mb-0">
           <h6 class="mb-0 fw-bold">Breakfast</h6>
-          <mat-slide-toggle
-            color="accent"
-            class="small-toggle"
-            formControlName="breakfastAvailable"
-          ></mat-slide-toggle>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input custom-toggle small-toggle"
+              type="checkbox"
+              id="breakfastAvailable"
+              formControlName="breakfastAvailable"
+            />
+          </div>
         </div>
-        <mat-form-field appearance="outline" class="w-100 mb-0 black-outline-field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 mb-0 black-outline-field"
+        >
           <input
             matInput
             formControlName="breakfast"
@@ -75,28 +127,40 @@
         </mat-form-field>
 
         <!-- Lunch -->
-        <div class="d-flex justify-content-between align-items-center mb-0 ">
+        <div class="d-flex justify-content-between align-items-center mb-0">
           <h6 class="mb-0 fw-bold">Lunch</h6>
-          <mat-slide-toggle
-            color="accent"
-            class="small-toggle"
-            formControlName="lunchAvailable"
-          ></mat-slide-toggle>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input custom-toggle small-toggle"
+              type="checkbox"
+              id="lunchAvailable"
+              formControlName="lunchAvailable"
+            />
+          </div>
         </div>
-        <mat-form-field appearance="outline" class="w-100 mb-0 black-outline-field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 mb-0 black-outline-field"
+        >
           <input matInput formControlName="lunch" placeholder="Enter Details" />
         </mat-form-field>
 
         <!-- Dinner -->
         <div class="d-flex justify-content-between align-items-center mb-0">
           <h6 class="mb-0 fw-bold">Dinner</h6>
-          <mat-slide-toggle
-            color="accent"
-            class="small-toggle"
-            formControlName="dinnerAvailable"
-          ></mat-slide-toggle>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input custom-toggle small-toggle"
+              type="checkbox"
+              id="dinnerAvailable"
+              formControlName="dinnerAvailable"
+            />
+          </div>
         </div>
-        <mat-form-field appearance="outline" class="w-100 mb-0 black-outline-field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 mb-0 black-outline-field"
+        >
           <input
             matInput
             formControlName="dinner"
@@ -107,13 +171,19 @@
         <!-- Hi-Tea -->
         <div class="d-flex justify-content-between align-items-center mb-0">
           <h6 class="mb-0 fw-bold">Hi-Tea</h6>
-          <mat-slide-toggle
-            color="accent"
-            class="small-toggle"
-            formControlName="hiTeaAvailable"
-          ></mat-slide-toggle>
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input custom-toggle small-toggle"
+              type="checkbox"
+              id="hiTeaAvailable"
+              formControlName="hiTeaAvailable"
+            />
+          </div>
         </div>
-        <mat-form-field appearance="outline" class="w-100 mb-0 black-outline-field">
+        <mat-form-field
+          appearance="outline"
+          class="w-100 mb-0 black-outline-field"
+        >
           <input matInput formControlName="hiTea" placeholder="Enter Details" />
         </mat-form-field>
       </div>
@@ -122,7 +192,11 @@
       <button
         mat-raised-button
         class="w-100 py-3 fw-medium rounded-3 mt-3"
-        [disabled]="loading"
+        [disabled]="
+          loading ||
+          !pricingForm.get('mealsOffered')?.value ||
+          !pricingForm.get('fullDay')?.value
+        "
         style="background-color: #f7931e; color: #fff"
       >
         <div class="d-flex align-items-center justify-content-center">
@@ -136,7 +210,6 @@
           <span>{{ loading ? "Saving..." : "Save Pricing" }}</span>
         </div>
       </button>
-
     </form>
   </mat-card>
 </div>

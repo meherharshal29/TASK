@@ -1,3 +1,63 @@
+/* Default (Large) Toggle */
+.custom-toggle {
+  width: 50px;
+  height: 26px;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: #dcdcdc;
+  border: none;
+  position: relative;
+  appearance: none;
+  transition: all 0.3s ease-in-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 2px;
+    left: 2px;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:checked {
+    background-color: #f7931e;
+  }
+
+  &:checked::before {
+    transform: translateX(24px);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(247, 147, 30, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* Smaller Toggle */
+.small-toggle {
+  width: 38px;
+  height: 20px;
+
+  &::before {
+    width: 16px;
+    height: 16px;
+    top: 2px;
+    left: 2px;
+  }
+
+  &:checked::before {
+    transform: translateX(18px);
+  }
+}
+
 /* Headings */
 .heading-color {
   color: #f7931e;
@@ -29,11 +89,12 @@
   width: 30px !important;
   height: 16px !important;
 }
+
 /* Custom warning (warm orange) for slide toggle */
 ::ng-deep .custom-warn-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #f7931e !important; /* warm orange */
+  background-color: #f7931e !important;
+  /* warm orange */
 }
-
 
 // /* Slide toggle colors */
 // .mat-slide-toggle.mat-checked .mat-slide-toggle-bar,
@@ -57,7 +118,6 @@ button.mat-raised-button {
 button.mat-raised-button:hover {
   background-color: #e68200;
 }
-
 
 // Black outline for Full Day Price field
 .black-outline-field {

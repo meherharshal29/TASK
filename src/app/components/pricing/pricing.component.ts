@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '../../shared/material/material.module';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
@@ -29,34 +29,39 @@ export class PricingComponent implements OnInit {
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private pricingService: PricingService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
- this.pricingForm = this.fb.group({
-  fullDay: [false],
-  fullDayPrice: [{ value: '', disabled: true }, [Validators.min(0)]],
-  checkIn: [{ value: '00:00', disabled: true }],   // 12:00 AM default
-  checkOut: [{ value: '00:00', disabled: true }],  // 12:00 AM default
-  mealsOffered: [false],
-  breakfastAvailable: [{ value: false, disabled: true }],
-  breakfast: [{ value: '', disabled: true }],
-  lunchAvailable: [{ value: false, disabled: true }],
-  lunch: [{ value: '', disabled: true }],
-  dinnerAvailable: [{ value: false, disabled: true }],
-  dinner: [{ value: '', disabled: true }],
-  hiTeaAvailable: [{ value: false, disabled: true }],
-  hiTea: [{ value: '', disabled: true }]
-});
-
+    this.pricingForm = this.fb.group({
+      fullDay: [false],// parent toggle always disable
+      fullDayPrice: [{ value: '', disabled: true }, [Validators.min(0)]],
+      checkIn: [{ value: '00:00', disabled: true }],
+      checkOut: [{ value: '00:00', disabled: true }],
+      // parent toggle always disable
+      mealsOffered: [{ value: false, disabled: false }], 
+      breakfastAvailable: [{ value: true, disabled: true }],
+      breakfast: [{ value: '', disabled: true }],
+      lunchAvailable: [{ value: true, disabled: true }],
+      lunch: [{ value: '', disabled: true }],
+      dinnerAvailable: [{ value: true, disabled: true }],
+      dinner: [{ value: '', disabled: true }],
+      hiTeaAvailable: [{ value: true, disabled: true }],
+      hiTea: [{ value: '', disabled: true }]
+    });
 
     this.setupFormListeners();
   }
+
+  //  get fullDayControl(): FormControl {
+  //   return this.pricingForm.get('fullDay') as FormControl;
+  // }
 
   setupFormListeners() {
     const fullDayPriceControl = this.pricingForm.get('fullDayPrice');
     const checkInControl = this.pricingForm.get('checkIn');
     const checkOutControl = this.pricingForm.get('checkOut');
 
+    // Full Day Toggle
     this.pricingForm.get('fullDay')?.valueChanges.subscribe(enabled => {
       if (enabled) {
         fullDayPriceControl?.enable();
@@ -78,22 +83,24 @@ export class PricingComponent implements OnInit {
       checkOutControl?.updateValueAndValidity();
     });
 
+    // Meals Offered Toggle (Master Enable)
     this.pricingForm.get('mealsOffered')?.valueChanges.subscribe(enabled => {
       const mealToggles = ['breakfastAvailable', 'lunchAvailable', 'dinnerAvailable', 'hiTeaAvailable'];
-      const mealInputs = ['breakfast', 'lunch', 'dinner', 'hiTea'];
-      mealToggles.forEach((toggle, i) => {
+
+      mealToggles.forEach(toggle => {
         const toggleCtrl = this.pricingForm.get(toggle);
-        const inputCtrl = this.pricingForm.get(mealInputs[i]);
         if (enabled) {
-          toggleCtrl?.enable();
+          toggleCtrl?.enable(); // enable all child toggles
+          toggleCtrl?.setValue(true, { emitEvent: false }); // optionally set them ON
         } else {
           toggleCtrl?.disable();
-          inputCtrl?.disable();
-          inputCtrl?.setValue('');
+          this.pricingForm.get(toggle.replace('Available', ''))?.disable(); // disable corresponding input
+          this.pricingForm.get(toggle.replace('Available', ''))?.setValue('');
         }
       });
     });
 
+    // Each child toggle controls its own input independently
     ['breakfast', 'lunch', 'dinner', 'hiTea'].forEach(meal => {
       this.pricingForm.get(`${meal}Available`)?.valueChanges.subscribe(enabled => {
         const inputCtrl = this.pricingForm.get(meal);
@@ -107,8 +114,8 @@ export class PricingComponent implements OnInit {
       this.snackBar.open('⚠️ Please fill in required fields.', '', {
         duration: 3000,
         panelClass: ['snackbar-error'],
-         horizontalPosition: 'right',
-         verticalPosition: 'top'
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
       });
       return;
     }
@@ -130,24 +137,41 @@ export class PricingComponent implements OnInit {
       hiTea: rawData.hiTea || ''
     };
 
-    // Show spinner for 3 seconds
     this.loading = true;
 
     setTimeout(() => {
       this.loading = false;
+
       this.snackBar.open('✅ Pricing Saved Successfully!', '', {
         duration: 3000,
         panelClass: ['snackbar-success'],
-         horizontalPosition: 'right',
-         verticalPosition: 'top'
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
       });
-      this.pricingForm.reset();
 
-      // Call API after spinner
+      // Properly reset the form with enabled/disabled state
+      this.pricingForm.reset({
+        fullDay: false,
+        fullDayPrice: { value: '', disabled: true, },
+        checkIn: { value: '00:00', disabled: true },
+        checkOut: { value: '00:00', disabled: true },
+        mealsOffered: false,       // always disable
+        breakfastAvailable: true,
+        breakfast: { value: '', disabled: true },
+        lunchAvailable: true,
+        lunch: { value: '', disabled: true },
+        dinnerAvailable: true,
+        dinner: { value: '', disabled: true },
+        hiTeaAvailable: true,
+        hiTea: { value: '', disabled: true }
+      });
+
+      // Call API after reset
       this.pricingService.addPricing(data).subscribe({
         error: (err) => console.error(err)
       });
 
     }, 3000);
   }
+
 }
