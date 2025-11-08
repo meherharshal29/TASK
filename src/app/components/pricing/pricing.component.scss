@@ -1,14 +1,6 @@
-mat-card {
-  background-color: #fff;
-  border-radius: 16px;
-}
-
-mat-form-field {
-  font-size: 14px;
-}
-
+/* Headings */
 .heading-color {
-color: #f7931e; 
+  color: #f7931e;
 }
 
 .snackbar-success {
@@ -21,11 +13,13 @@ color: #f7931e;
   color: white;
 }
 
+/* Slide toggle small size */
 .small-toggle {
-  transform: scale(0.6); /* Adjust size: 0.7 = smaller, 1 = normal */
+  transform: scale(0.6);
   margin-right: 5px;
 }
 
+/* Slide toggle custom dimensions */
 ::ng-deep .mat-slide-toggle-thumb {
   width: 14px !important;
   height: 14px !important;
@@ -35,8 +29,52 @@ color: #f7931e;
   width: 30px !important;
   height: 16px !important;
 }
+/* Custom warning (warm orange) for slide toggle */
+::ng-deep .custom-warn-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #f7931e !important; /* warm orange */
+}
 
 
-::ng-deep .ngx-mat-timepicker {
-  --ngx-mat-primary-color: #fbc02d; /* Material Yellow (like Bootstrap warning) */
+// /* Slide toggle colors */
+// .mat-slide-toggle.mat-checked .mat-slide-toggle-bar,
+// .mat-slide-toggle.mat-accent .mat-slide-toggle-bar {
+//   background-color: #f7931e !important;
+// }
+
+// .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+//   background-color: #fff !important;
+// }
+
+button.mat-raised-button {
+  background-color: #f7931e;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+button.mat-raised-button:hover {
+  background-color: #e68200;
+}
+
+
+// Black outline for Full Day Price field
+.black-outline-field {
+  // Default outline color
+  --mdc-outlined-text-field-outline-color: #000;
+  --mdc-outlined-text-field-hover-outline-color: #000;
+  --mdc-outlined-text-field-focus-outline-color: #000;
+
+  // Label color (black when focused or filled)
+  --mdc-outlined-text-field-label-text-color: #000;
+  --mdc-outlined-text-field-focus-label-text-color: #000;
+
+  // Remove the default blue ripple
+  --mdc-outlined-text-field-focus-outline-width: 2px;
+}
+
+// Optional: thicker black outline on focus (looks sharper)
+.black-outline-field.mat-focused {
+  --mdc-outlined-text-field-focus-outline-width: 2px;
 }

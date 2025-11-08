@@ -32,21 +32,22 @@ export class PricingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pricingForm = this.fb.group({
-      fullDay: [false],
-      fullDayPrice: [{ value: '', disabled: true }, [Validators.min(0)]],
-      checkIn: [{ value: '', disabled: true }],
-      checkOut: [{ value: '', disabled: true }],
-      mealsOffered: [false],
-      breakfastAvailable: [{ value: false, disabled: true }],
-      breakfast: [{ value: '', disabled: true }],
-      lunchAvailable: [{ value: false, disabled: true }],
-      lunch: [{ value: '', disabled: true }],
-      dinnerAvailable: [{ value: false, disabled: true }],
-      dinner: [{ value: '', disabled: true }],
-      hiTeaAvailable: [{ value: false, disabled: true }],
-      hiTea: [{ value: '', disabled: true }]
-    });
+ this.pricingForm = this.fb.group({
+  fullDay: [false],
+  fullDayPrice: [{ value: '', disabled: true }, [Validators.min(0)]],
+  checkIn: [{ value: '00:00', disabled: true }],   // 12:00 AM default
+  checkOut: [{ value: '00:00', disabled: true }],  // 12:00 AM default
+  mealsOffered: [false],
+  breakfastAvailable: [{ value: false, disabled: true }],
+  breakfast: [{ value: '', disabled: true }],
+  lunchAvailable: [{ value: false, disabled: true }],
+  lunch: [{ value: '', disabled: true }],
+  dinnerAvailable: [{ value: false, disabled: true }],
+  dinner: [{ value: '', disabled: true }],
+  hiTeaAvailable: [{ value: false, disabled: true }],
+  hiTea: [{ value: '', disabled: true }]
+});
+
 
     this.setupFormListeners();
   }
@@ -105,7 +106,9 @@ export class PricingComponent implements OnInit {
     if (!this.pricingForm.valid) {
       this.snackBar.open('⚠️ Please fill in required fields.', '', {
         duration: 3000,
-        panelClass: ['snackbar-error']
+        panelClass: ['snackbar-error'],
+         horizontalPosition: 'right',
+         verticalPosition: 'top'
       });
       return;
     }
@@ -134,7 +137,9 @@ export class PricingComponent implements OnInit {
       this.loading = false;
       this.snackBar.open('✅ Pricing Saved Successfully!', '', {
         duration: 3000,
-        panelClass: ['snackbar-success']
+        panelClass: ['snackbar-success'],
+         horizontalPosition: 'right',
+         verticalPosition: 'top'
       });
       this.pricingForm.reset();
 
