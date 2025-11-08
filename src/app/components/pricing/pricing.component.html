@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+  <mat-card class="p-4 shadow rounded-4 w-100" style="max-width: 450px;">
+    <form [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
+
+      <!-- Full Day Toggle -->
+      <div class="d-flex justify-content-between align-items-center mb-0">
+        <div>
+          <h5 class="fw-bold mb-0">Full Day</h5>
+          <small class="text-muted">Prices include all Fees</small>
+        </div>
+        <mat-slide-toggle color="primary" formControlName="fullDay"></mat-slide-toggle>
+      </div>
+
+      <!-- Full Day Price -->
+      <mat-form-field appearance="outline" class="w-100 mb-0">
+        <mat-label>Full Day Price</mat-label>
+        <input matInput type="number" formControlName="fullDayPrice" placeholder="0" />
+      </mat-form-field>
+
+      <!-- Default Timing -->
+      <h6 class="fw-bold text-warning mb-2">Default Timing</h6>
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Check In</mat-label>
+            <input matInput type="time" formControlName="checkIn" />
+            <mat-icon matSuffix>schedule</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Check Out</mat-label>
+            <input matInput type="time" formControlName="checkOut" />
+            <mat-icon matSuffix>schedule</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Meals Offered -->
+     <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+      <h6 class="fw-bold text-warning mb-0">Meals Offered</h6>
+      <mat-slide-toggle color="primary" formControlName="mealsOffered"></mat-slide-toggle>
+    </div>
+
+      <!-- Meals Section -->
+      <div class="border rounded-3 p-3 bg-white shadow-sm">
+
+        <!-- Breakfast -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">Breakfast</h6>
+          <mat-slide-toggle color="primary" class="small-toggle" formControlName="breakfastAvailable"></mat-slide-toggle>
+        </div>
+        <mat-form-field appearance="outline" class="w-100 mb-0">
+          <input matInput formControlName="breakfast" placeholder="Enter Details" />
+        </mat-form-field>
+
+        <!-- Lunch -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">Lunch</h6>
+            <mat-slide-toggle color="primary" class="small-toggle" formControlName="lunchAvailable"></mat-slide-toggle>
+        </div>
+        <mat-form-field appearance="outline" class="w-100 mb-0">
+          <input matInput formControlName="lunch" placeholder="Enter Details" />
+        </mat-form-field>
+
+        <!-- Dinner -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">Dinner</h6>
+          <mat-slide-toggle color="primary" class="small-toggle" formControlName="dinnerAvailable"></mat-slide-toggle>
+        </div>
+        <mat-form-field appearance="outline" class="w-100 mb-0">
+          <input matInput formControlName="dinner" placeholder="Enter Details" />
+        </mat-form-field>
+
+        <!-- Hi-Tea -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h6 class="mb-0">Hi-Tea</h6>
+          <mat-slide-toggle class="small-toggle" formControlName="hiTeaAvailable"></mat-slide-toggle>
+        </div>
+        <mat-form-field appearance="outline" class="w-100 mb-2">
+          <input matInput formControlName="hiTea" placeholder="Enter Details" />
+        </mat-form-field>
+
+      </div>
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="warn" class="w-100 py-3 fw-bold rounded-3 mt-3">
+        Save Pricing
+      </button>
+
+    </form>
+  </mat-card>
+</div>

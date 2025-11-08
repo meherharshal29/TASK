@@ -1,0 +1,38 @@
+mat-card {
+  background-color: #fff;
+  border-radius: 16px;
+}
+
+mat-form-field {
+  font-size: 14px;
+}
+
+.snackbar-success {
+  background: #4caf50;
+  color: white;
+}
+
+.snackbar-error {
+  background: #f44336;
+  color: white;
+}
+
+.small-toggle {
+  transform: scale(0.6); /* Adjust size: 0.7 = smaller, 1 = normal */
+  margin-right: 5px;
+}
+
+::ng-deep .mat-slide-toggle-thumb {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+::ng-deep .mat-slide-toggle-bar {
+  width: 30px !important;
+  height: 16px !important;
+}
+
+
+::ng-deep .ngx-mat-timepicker {
+  --ngx-mat-primary-color: #fbc02d; /* Material Yellow (like Bootstrap warning) */
+}
